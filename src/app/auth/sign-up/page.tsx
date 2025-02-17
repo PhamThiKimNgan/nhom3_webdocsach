@@ -5,10 +5,9 @@ import InputWithBorder from "@/components/input-components/input-with-border";
 import ButtonWithoutBorder from "@/components/button-components/button-without-border";
 
 const SignUp = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName]   = useState("");
-  const [email, setEmail]         = useState("");
-  const [password, setPassword]   = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [marketingAccept, setMarketingAccept] = useState(false);
   const [message, setMessage] = useState("");
@@ -28,8 +27,7 @@ const SignUp = () => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          firstName,
-          lastName,
+          fullName,
           email,
           password,
           marketingAccept
@@ -89,21 +87,13 @@ const SignUp = () => {
             </p>
 
             <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-6 gap-6">
+              
               <InputWithBorder
                 type="text"
-                label="First Name"
-                value={firstName}
+                label="Full Name"
+                value={fullName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setFirstName(e.target.value)
-                }
-              />
-
-              <InputWithBorder
-                type="text"
-                label="Last Name"
-                value={lastName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setLastName(e.target.value)
+                  setFullName(e.target.value)
                 }
               />
 
