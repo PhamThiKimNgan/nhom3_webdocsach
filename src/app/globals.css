@@ -19,3 +19,11 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.bg-dark{
+  background-color: #090d33;
+}
+
+.bg-primary{
+  background-color: #1b94ff;
+}
