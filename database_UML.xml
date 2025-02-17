@@ -1,1 +1,148 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="DbDiagram" name="Database Diagram">
+    <mxGraphModel dx="1120" dy="740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
 
+        <!-- table_admin -->
+        <mxCell id="admin" value="table_admin&#xa;----------------&#xa;PK: admin_id&#xa;first_name&#xa;last_name&#xa;email&#xa;phone_number&#xa;username&#xa;password" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- table_author -->
+        <mxCell id="author" value="table_author&#xa;----------------&#xa;PK: author_id&#xa;author_name&#xa;author_education&#xa;author_country&#xa;number_of_published_books" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="180" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- table_publisher -->
+        <mxCell id="publisher" value="table_publisher&#xa;----------------&#xa;PK: publisher_id&#xa;publisher_name&#xa;address&#xa;country&#xa;publisher_phone_number&#xa;publisher_email" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="40" width="180" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- table_book_status -->
+        <mxCell id="bookStatus" value="table_book_status&#xa;----------------&#xa;PK: book_status_id&#xa;book_status" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="40" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- table_customer -->
+        <mxCell id="customer" value="table_customer&#xa;----------------&#xa;PK: customer_id&#xa;customer_first_name&#xa;customer_last_name&#xa;customer_address&#xa;customer_username&#xa;customer_password&#xa;email&#xa;account_creation_date&#xa;customer_phone_number&#xa;customer_image" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="200" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- table_orderStatus -->
+        <mxCell id="orderStatus" value="table_orderStatus&#xa;----------------&#xa;PK: order_status_id&#xa;order_status" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="160" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- table_payment -->
+        <mxCell id="payment" value="table_payment&#xa;----------------&#xa;PK: payment_method_id&#xa;payment_method" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="160" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- table_payment_status -->
+        <mxCell id="paymentStatus" value="table_payment_status&#xa;----------------&#xa;PK: payment_status_id&#xa;payment_status" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="160" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- table_book_detail -->
+        <mxCell id="bookDetail" value="table_book_detail&#xa;----------------&#xa;PK: book_id&#xa;book_name&#xa;book_isbn_number&#xa;book_price&#xa;book_published_date&#xa;book_language&#xa;pages&#xa;rating&#xa;book_image&#xa;FK: author_id&#xa;FK: publisher_id&#xa;FK: book_status_id" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="300" width="220" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- table_cart -->
+        <mxCell id="cart" value="table_cart&#xa;----------------&#xa;PK: cart_id&#xa;FK: customer_id&#xa;FK: book_id&#xa;confirmation_status" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="300" width="180" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- table_customer_order_book -->
+        <mxCell id="customerOrderBook" value="table_customer_order_book&#xa;----------------&#xa;PK: order_id&#xa;order_date&#xa;delivery_date&#xa;total_price&#xa;FK: customer_id&#xa;FK: order_status_id&#xa;FK: feedback_id (later)&#xa;FK: payment_id (later)" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="220" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- table_feedback -->
+        <mxCell id="feedback" value="table_feedback&#xa;----------------&#xa;PK: feedback_id&#xa;feedback&#xa;FK: customer_id&#xa;FK: book_id&#xa;FK: order_id" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="440" width="200" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- tablePayment (Payment Details) -->
+        <mxCell id="paymentDetails" value="tablePayment&#xa;----------------&#xa;PK: payment_id&#xa;payment_amount&#xa;payment_date&#xa;FK: order_id&#xa;FK: payment_method_id&#xa;FK: payment_status_id" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="440" width="220" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- table_customer_book_order_details -->
+        <mxCell id="orderDetails" value="table_customer_book_order_details&#xa;----------------&#xa;PK: customer_book_order_detail_id&#xa;book_price&#xa;book_qty&#xa;discount&#xa;total_price&#xa;FK: book_id&#xa;FK: order_id" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="560" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Now the edges for foreign key relationships -->
+
+        <!-- table_book_detail foreign keys -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="bookDetail" target="author">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="bookDetail" target="publisher">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="bookDetail" target="bookStatus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- table_cart foreign keys -->
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="cart" target="customer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="cart" target="bookDetail">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- table_customer_order_book foreign keys -->
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="customerOrderBook" target="customer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="customerOrderBook" target="orderStatus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- table_feedback foreign keys -->
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="feedback" target="customer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="feedback" target="bookDetail">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="feedback" target="customerOrderBook">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- tablePayment foreign keys -->
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="paymentDetails" target="customerOrderBook">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="paymentDetails" target="payment">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="paymentDetails" target="paymentStatus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Altered foreign keys in table_customer_order_book -->
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=block;html=1;" edge="1" source="customerOrderBook" target="feedback">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=block;html=1;" edge="1" source="customerOrderBook" target="paymentDetails">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- table_customer_book_order_details foreign keys -->
+        <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="orderDetails" target="bookDetail">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;endArrow=block;html=1;" edge="1" source="orderDetails" target="customerOrderBook">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
