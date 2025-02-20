@@ -143,7 +143,7 @@ public class EmailServiceImpl implements EmailService {
         MimeMessageHelper helper = null;
         try {
             helper = new MimeMessageHelper(message, true);
-            helper.setFrom("noreply@baeldung.com");
+            helper.setFrom("noreply@t3story.com");
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(text, true);
