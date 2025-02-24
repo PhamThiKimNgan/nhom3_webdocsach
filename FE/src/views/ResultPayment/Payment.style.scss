@@ -1,0 +1,48 @@
+@import "../../scss/abstract/variables";
+.payment-section {
+  margin: 0 auto;
+  .headline {
+    text-align: center;
+  }
+  .payment-list {
+    margin: 0 auto;
+
+    padding: 1.5rem;
+    max-width: 60rem;
+    display: flex;
+
+    flex-direction: column;
+    row-gap: 1.5rem;
+
+    .payment-item {
+      padding: 1.5rem;
+      border-radius: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      column-gap: 5rem;
+
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+  }
+}
+.paymen-price {
+  font-size: 3rem;
+  font-weight: 600;
+
+  color: #3ec70b;
+}
+.paymen-item__button {
+  background-color: $main-color;
+  padding: 1rem 2rem;
+  border-radius: 1.2rem;
+
+  color: white;
+
+  user-select: none;
+
+  cursor: pointer;
+}
+.paymen-item__button:hover {
+  background-color: $main-color-hover;
+}
