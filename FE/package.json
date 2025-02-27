@@ -6,6 +6,10 @@
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^33.0.0",
         "@ckeditor/ckeditor5-react": "^4.0.0",
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/icons-material": "^6.4.6",
+        "@mui/material": "^6.4.6",
         "@reduxjs/toolkit": "^1.8.0",
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^11.2.7",

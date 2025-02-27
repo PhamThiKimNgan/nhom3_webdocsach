@@ -38,7 +38,6 @@ function Register() {
     const onChangeUsername = debounce(async (e: ChangeEvent) => {//validate username
         let username = e.target.value
         setUsernameRegister(username)
-        console.log(username)
         dispatchReg({ type: "USERNAME", payload: await validateUsername(username) })
     }, 500)
 

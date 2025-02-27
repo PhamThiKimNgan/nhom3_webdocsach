@@ -1,0 +1,148 @@
+.admin-chapters-form {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+
+  &__add-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: #3d8b40;
+    }
+    
+    i {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__chapter {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background-color: #f8f9fa;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #f1f1f1;
+      }
+      
+      &.expanded {
+        border-bottom: 1px solid #ddd;
+      }
+    }
+    
+    &-content {
+      padding: 16px;
+    }
+    
+    &-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+    
+    &-toggle {
+      font-size: 1.4rem;
+      transition: transform 0.2s;
+      
+      &.expanded {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__field {
+    margin-bottom: 16px;
+  }
+
+  &__label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    
+    &:focus {
+      outline: none;
+      border-color: #2196f3;
+      box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+    }
+  }
+
+  &__textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    min-height: 300px;
+    resize: vertical;
+    
+    &:focus {
+      outline: none;
+      border-color: #2196f3;
+      box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+
+  &__remove-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: #d32f2f;
+    }
+    
+    i {
+      font-size: 1.2rem;
+    }
+  }
+}

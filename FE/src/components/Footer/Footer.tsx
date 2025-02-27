@@ -1,6 +1,9 @@
 import React from 'react'
 import avt from '../../assets/img/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { userStore } from 'store/userStore';
+import AdminFooter from '../Admin/AdminFooter/AdminFooter'
+
 const menu =[
     {
         display:"Điều khoản dịch vụ",
@@ -20,7 +23,16 @@ const menu =[
     }
 ]
 function Footer() {
+  const user = userStore(state => state.user);
+  const isAdmin = user?.roles?.some(role => role.name === 'ADMIN');
+  const isInAdminSection = useLocation().pathname.startsWith('/admin');
 
+  // If user is admin and is in admin section, render AdminFooter
+  if (isAdmin && isInAdminSection) {
+    return <AdminFooter />;
+  }
+
+  // Otherwise render regular footer
   return (
     <div className="container" style={{marginTop:"3rem"}}>
         <section>

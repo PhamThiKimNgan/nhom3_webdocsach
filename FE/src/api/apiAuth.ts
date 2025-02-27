@@ -44,11 +44,11 @@ export const updateTraffic= async () => {
 }
 
 export const checkUsername=async (params:any) => {
-    const res = getData(await axiosClient.post('/auth/checkusername', params))
+    const res = getData(await axiosClient.post('/auth/check-username', params))
     return res;
 }
 export const checkEmail=async (params:any) => {
-    const res = getData(await axiosClient.post('/auth/checkemail', params))
+    const res = getData(await axiosClient.post('/auth/check-email', params))
     return res;
 }
 
