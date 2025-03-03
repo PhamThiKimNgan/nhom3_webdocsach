@@ -1,5 +1,5 @@
 export interface Chapter {
-    id: string;
+    _id: string;
     name:string;
     chapternumber:number;
     content?:string;

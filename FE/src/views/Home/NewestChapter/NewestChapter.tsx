@@ -8,8 +8,19 @@ import './NewestChapter.scss'
 import { useQuery } from 'react-query'
 import { getChapterNewUpdate } from 'api/apiStory'
 
+interface ChapterUpdate {
+  type: string;
+  url: string;
+  name: string;
+  chapternumber: string | number;
+  chaptername: string;
+  author: string;
+  uploader: string;
+  updatedAt: string | Date;
+}
+
 function NewestChapter() {
-const [newUpdate,setNewUpdate]  = useState(Array.from(Array(10).keys(),i=>undefined))
+const [newUpdate,setNewUpdate]  = useState<(ChapterUpdate | undefined)[]>(Array.from(Array(10).keys(),i=>undefined))
 const {data, isFetched} = useQuery(['get-newest-chapter',{size:10}],getChapterNewUpdate)
   useEffect(()=>{
     if(isFetched && data) {

@@ -17,7 +17,7 @@ function Profile() {
 
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState(user?.image || avt)
-  const [name, setName] = useState(user?.tenhienthi || "");
+  const [name, setName] = useState(user?.nickname || "");
   const [birthDate, setBirthDate] = useState(new Date());
   const [loading, setLoading] = useState(false)
   const [loadingUser, setLoadingUser] = useState(false)
@@ -25,7 +25,7 @@ function Profile() {
   useEffect(() => {
     const loadUserInfo = async () => {//load thông tin của user
       if (user) {
-        setName(user?.tenhienthi ?? "")
+        setName(user?.nickname ?? "")
         setBirthDate(user?.birthdate ? new Date(user?.birthdate) : new Date())
         setPreview(user?.image)
         setLoadingUser(false)
@@ -41,7 +41,7 @@ function Profile() {
     uploadBytes(storageRef, image).then((result) => {
       getDownloadURL(result.ref).then(async (url) => {//lấy liên kết tới ảnh
         const data = {
-          tenhienthi: name,
+          nickname: name,
           image: url,
           birthdate: birthDate
         }
@@ -76,7 +76,7 @@ function Profile() {
   const handleEdit: ClickEventHandler = async (e) => {
     e.preventDefault()
     const data = {
-      tenhienthi: name,
+      nickname: name,
       image: preview,
       birthdate: birthDate
     }

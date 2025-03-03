@@ -21,6 +21,7 @@ function ListStory() {
 
     const getReading = async () => {//Xử lý gọi API thông tin đang đọc
       let readingsDefault = await getReadingDefault({ page: 1, size: 8 });
+      console.log(readingsDefault)
 
       if (user) {
         if (readingsDefault) {
@@ -30,6 +31,7 @@ function ListStory() {
               if (res.length < 10) {
                 res = [...res, ...readingsDefault].slice(0, 8)
               }
+              console.log(res)
               setReadings(res)
               localStorage.setItem("readings", JSON.stringify(res))
             })
@@ -98,7 +100,7 @@ function ListStory() {
               readings.length === 0 ? Array.from(Array(6)).map(
                 (data, index) => <ReadingItem key={index} data={data}/>
               ) :
-              readings.map((item, i) => <ReadingItem key={i} data={item} />)}
+              readings.map((item, i) => item.url? <ReadingItem key={i} data={item} /> : null)}
             </div>
           </SectionBody>
         </Section>
