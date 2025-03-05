@@ -612,12 +612,15 @@ export const NovelController = {
                 readings = await Promise.all(readings.map(async (item) => {
                     let sochap = await Chapter.countDocuments({ novelId: item.novelId._id })
                     const  {  novelId, ...itemData } = item
+                    console.log(novelId)
                     return {
                         "name": novelId.name,
                         "image": novelId.image,
                         "chapternumber": novelId.reads+1,
                         "url": novelId.url,
                         "sochap": novelId.numberofchapter,
+                        "author": novelId.author,
+                        "updatedAt": novelId.updatedAt,
                     }
                 }))
 
