@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getNovels, deleteNovelById } from "../../../api/apiStory";
+import { getNovels, deleteNovelByUrl } from "../../../api/apiStory";
 import Pagination from "../../../components/Pagination/Pagination";
 import Modal from "../../../components/Modal/Modal";
 import { ModalContent } from "../../../components/Modal/Modal";
@@ -40,7 +40,7 @@ const StoryManagement = () => {
     if (!selectedStory) return;
 
     try {
-      await deleteNovelById(selectedStory.id);
+      await deleteNovelByUrl(selectedStory.url);
       toast.success(`Đã xóa truyện ${selectedStory.name}`);
       setShowDeleteModal(false);
       fetchStories();
@@ -118,11 +118,11 @@ const StoryManagement = () => {
               </td>
               <td>{story.name}</td>
               <td>{story.author}</td>
-              <td>{story.views}</td>
-              <td>{story.status}</td>
+              <td>{story.reads}</td>
+              <td>{story.state}</td>
               <td>{new Date(story.createdAt).toLocaleDateString("vi-VN")}</td>
               <td className="action-buttons">
-                <Link to={`/admin/stories/${story._id}`} className="view-btn">
+                <Link to={`/truyen/${story.url}`} className="view-btn">
                   <i className="bx bx-show"></i> Xem
                 </Link>
                 <div className="story-actions">

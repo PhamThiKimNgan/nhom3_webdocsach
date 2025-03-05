@@ -14,6 +14,7 @@ const AdminCreateStory: React.FC = () => {
     author: "",
     description: "",
     image: "",
+    type: "",
     url: "",
     state:"",
   });

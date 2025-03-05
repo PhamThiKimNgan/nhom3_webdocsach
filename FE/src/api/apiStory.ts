@@ -113,6 +113,12 @@ export const deleteNovelById = async (id: string) => {
     await axiosClientWithToken.delete(`/admin/novel`, { params: { id } })
   );
 };
+
+export const deleteNovelByUrl = async (url: string) => {
+  return getData(
+    await axiosClientWithToken.delete(`/admin/novel`, { params: { url } })
+  );
+};
 export const getNovels = async (params: any): Promise<Story[]> => {
   return getData(await axiosClientWithToken.get(`/novels`, { params }));
 };

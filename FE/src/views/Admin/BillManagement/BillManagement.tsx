@@ -85,7 +85,6 @@ const BillManagement = () => {
             <th>ID</th>
             <th>Người dùng</th>
             <th>Số tiền</th>
-            <th>Phương thức</th>
             <th>Mô tả</th>
             <th>Trạng thái</th>
             <th>Thời gian</th>
@@ -94,10 +93,9 @@ const BillManagement = () => {
         <tbody>
           {currentBills.map((bill) => (
             <tr key={bill.id}>
-              <td>{bill.id}</td>
-              <td>{bill.username || bill.userId}</td>
+              <td>{bill.orderId}</td>
+              <td>{bill.name || bill.userId}</td>
               <td>{bill.amount.toLocaleString('vi-VN')} VND</td>
-              <td>{bill.paymentMethod}</td>
               <td>{bill.description}</td>
               <td>
                 <span className={getStatusClassName(bill.status)}>

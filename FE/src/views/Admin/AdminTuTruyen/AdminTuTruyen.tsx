@@ -44,29 +44,30 @@ const AdminTuTruyenReading = () => {
       ) : (
         <div className="stories-grid">
           {stories.length > 0 ? (
+            console.log("stories", stories),
             stories.map((story) => (
-              <div key={story.novelId.id} className="story-card">
+              <div key={story.id} className="story-card">
                 <div className="story-cover">
                   <img
                     src={
-                      story.novelId?.image ||
+                      story.image ||
                       "https://via.placeholder.com/100x150"
                     }
-                    alt={story.novelId?.name || "Không có tiêu đề"}
+                    alt={story.name || "Không có tiêu đề"}
                   />
                   <div className="story-badge">Đang đọc</div>
                 </div>
                 <div className="story-info">
-                  <h3>{story.novelId?.name || "Không có tiêu đề"}</h3>
+                  <h3>{story.name || "Không có tiêu đề"}</h3>
                   <p className="author">
-                    {story.novelId?.author || "Chưa có tác giả"}
+                    {story.author || "Chưa có tác giả"}
                   </p>
                   <p className="last-chapter">
-                    Đã đọc: Chương {story.novelId.numberofchapter || "N/A"}
+                    Đã đọc: Chương {story.chapternumber || "N/A"}
                   </p>
                   <p className="last-read">
                     Lần cuối:{" "}
-                    {new Date(story.novelId.updatedAt).toLocaleDateString()}
+                    {new Date(story?.updatedAt).toLocaleDateString()}
                   </p>
                 </div>
                 <div className="story-actions">

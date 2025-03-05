@@ -72,16 +72,16 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ story, onChange }) => {
             Thể loại
           </label>
           <select
-            id="category"
-            name="category"
+            id="type"
+            name="type"
             className="admin-story-form__select"
-            value={story.category || ""}
+            value={story.type || console.log(story)}
             onChange={handleChange}
           >
             <option value="">-- Chọn thể loại --</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
+            {categories.map((type) => (
+              <option key={type} value={type}>
+                {type}
               </option>
             ))}
           </select>
