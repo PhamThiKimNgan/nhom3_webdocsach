@@ -5,10 +5,9 @@ import mongoose from 'mongoose';
 import QueryString from 'qs';
 import { Bill } from '../models/Bill.js';
 import { User } from '../models/User.js';
-// const frontendUrl = 'http://localhost:3000/'
-// const backendUrl = 'http://localhost:5000/'
-const frontendUrl = 'https://cnpmm.vercel.app/'
-const backendUrl = 'https://becnpmm.vercel.app/'
+const frontendUrl = 'http://localhost:3000/'
+const backendUrl = 'http://localhost:5000/'
+
 export const PaymentController = {
     createPayment: async (req, res) => {
         try {

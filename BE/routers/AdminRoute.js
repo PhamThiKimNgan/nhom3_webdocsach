@@ -4,6 +4,7 @@ import { AuthController } from '../controllers/AuthController.js';
 import { CommentController } from '../controllers/CommentController.js';
 import {verifyToken, verifyTokenAdmin} from "../controllers/middlewareController.js"
 import { RatingController } from '../controllers/RatingController.js';
+import { NovelController } from '../controllers/NovelController.js';
 
 const router = express.Router();
 
@@ -37,5 +38,6 @@ router.put('/role/updatetouser', verifyTokenAdmin, AdminController.updateRoles);
 // DELETE routes
 router.delete('/comment', verifyTokenAdmin, CommentController.DeleteComment);
 router.delete('/rating', verifyTokenAdmin, RatingController.DeleteRating);
+router.delete('/novel', verifyTokenAdmin, NovelController.DeleteNovelByUrl);
 
 export default router;

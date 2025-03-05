@@ -10,13 +10,9 @@ import { Chapterunlocked } from "../models/Chapterunlocked.js"
 export const NovelController = {
     CreateNovel: async (req, res) => {
         try {
-            const name = req.body.tentruyen
-            const url = req.body.url
-            const image = req.body.hinhanh
-            const type = req.body.theloai
-            const author = req.body.tacgia
+            const { chaptername: name, url, image, type, author, status } = req.body
             const uploader = new mongoose.Types.ObjectId(req.body.nguoidangtruyen)
-            const novel = await new Novel({ name, url, image, type, author, uploader })
+            const novel = await new Novel({ name, url, image, type, author, uploader, status })
             let error = novel.validateSync();
             if (error)
                 return res.status(400).json(ResponseDetail(400, {
@@ -35,11 +31,8 @@ export const NovelController = {
     },
     EditNovel: async (req, res) => {
         try {
-            const name = req.body.chaptername
-            const url = req.body.url
-            const image = req.body.image
-            const type = req.body.type
-            const author = req.body.author
+            console.log(req.body)
+            const { chaptername: name, url, image, type, author, status } = req.body
             const id = new mongoose.Types.ObjectId(req.body.id)
             const username = req.user.sub
             const newUser = await User.findOne({ username: username })
@@ -50,7 +43,7 @@ export const NovelController = {
             if (!novel)
                 return res.status(400).json(ResponseDetail(400, { message: "Bạn không có quyền sửa truyện của người khác" }))
             const newNovel = await Novel.findByIdAndUpdate(id, {
-                name, url, image, type, author
+                name, url, image, type, author, status
             }, { new: true })
             if (newNovel)
                 return res.status(200).json(ResponseData(200, novel))
@@ -69,10 +62,13 @@ export const NovelController = {
             if (!newUser)
                 return res.status(405).json(ResponseDetail(403, { message: "Bạn không có quyền xoá truyện của người khác" }))
             const novel = await Novel.findOne({ url: url })
+            
             if (novel) {
-                if (!novel.uploader.equals(newUser._id)) {
-                    return res.status(403).json(ResponseDetail(403, { message: "Bạn không có quyền xoá truyện của người khác" }))
-                }
+                // const isAdmin = newUser.roles && newUser.roles.some((role) => role.name === 'ADMIN');;
+                // const isUploader = novel.uploader.equals(newUser._id);
+                
+                // if (!isAdmin && !isUploader)
+                //     return res.status(403).json(ResponseDetail(403, { message: "Bạn không có quyền xoá truyện của người khác" }))
                 const response = await Novel.deleteOne({ _id: novel._id })
                 if (response.deletedCount == 1)
                     return res.status(200).json(ResponseData(200, { message: "Xoá truyện thành công" }))
@@ -90,7 +86,6 @@ export const NovelController = {
     GetNovelById: async (req, res) => {
         try {
             const id = req.params.id;
-            console.log("NBI")
             
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 return res.status(400).json(ResponseDetail(400, { message: "ID truyện không hợp lệ" }));
@@ -188,16 +183,23 @@ export const NovelController = {
             const url = req.query.url
             const chapnumber = req.query.chapnumber
             const user = req.user
-            const newUser = await User.findOne({ username: user.sub })
+            const newUser = await User.findOne({ username: user.sub }).populate("roles")
             if (!newUser)
-                return req.status(405).json(ResponseDetail(403, { message: "Bạn không có quyền xoá truyện của người khác" }))
+                return res.status(403).json(ResponseDetail(403, { message: "Bạn không có quyền xoá truyện của người khác" }))
+            
             const novel = await Novel.findOne({ url: url })
             if (novel) {
-                if (!novel.uploader.equals(newUser._id))
+                // Check if user is admin or the uploader
+                const isAdmin = newUser.roles && newUser.roles.find((role) => role.name === 'ADMIN');;
+                const isUploader = novel.uploader.equals(newUser._id);
+                
+                if (!isAdmin && !isUploader)
                     return res.status(403).json(ResponseDetail(403, { message: "Bạn không có quyền xoá truyện của người khác" }))
-                const newChap = await Chapter.findOneAndDelete({ chapnumber, novelId: novel.id })
+                
+                const newChap = await Chapter.findOneAndDelete({ chapternumber: chapnumber, novelId: novel._id })
                 const count = await Chapter.count({ novelId: novel._id })
                 await Novel.updateOne({ _id: novel._id }, { numberofchapter: count })
+                
                 if (newChap) return res.status(200).json(ResponseData(200, { message: "Xoá chương thành công" }))
                 return res.status(400).json(ResponseDetail(400, { message: "Xoá chương không thành công" }))
             }
@@ -217,7 +219,7 @@ export const NovelController = {
                 return res.status(400).json(ResponseDetail(400, { message: "Dữ liệu không hợp lệ" }));
             }
             
-            const { name, author, description, image, url } = story;
+            const { name, author,type, description, image, url, state } = story;
             const uploader = new mongoose.Types.ObjectId(req.body.nguoidangtruyen || req.user.id);
             
             // Create novel
@@ -225,9 +227,11 @@ export const NovelController = {
                 name, 
                 url, 
                 image, 
+                type,
                 author, 
                 uploader,
                 description,
+                state,
                 numberofchapter: chapters.length
             });
             
@@ -268,6 +272,7 @@ export const NovelController = {
     UpdateNovelWithChapters: async (req, res) => {
         try {
             const { story, chapters } = req.body;
+            console.log( story)
             
             if (!story || !chapters || !Array.isArray(chapters)) {
                 return res.status(400).json(ResponseDetail(400, { message: "Dữ liệu không hợp lệ" }));
@@ -289,10 +294,10 @@ export const NovelController = {
             
             
             // Update novel details
-            const { name, author, description, image, url } = story;
+            const { name, author, description, image, url, state , type} = story;
             const updatedNovel = await Novel.findByIdAndUpdate(
                 novel._id, 
-                { name, author, description, image, url },
+                { name, author, description, image, url, state, type },
                 { new: true }
             );
             
