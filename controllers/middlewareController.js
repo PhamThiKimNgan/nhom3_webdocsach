@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { ResponseDetail } from "../services/ResponseJSON.js";
+
 const verifyToken = (req, res, next) => {
     //lấy ra header của jwt  
     //lúc này token sẽ có dạng Bearer <jwt_token>

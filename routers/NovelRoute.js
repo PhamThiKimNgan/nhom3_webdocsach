@@ -1,6 +1,6 @@
 import express from 'express';
 import { NovelController } from '../controllers/NovelController.js';
-
+import { verifyToken } from '../controllers/middlewarecontroller.js';
 const router = express.Router();
 
 // không cần xác thực, không tham số
@@ -18,6 +18,7 @@ router.get('/novel/:url/chuong/:chapNumber', NovelController.GetChapterByNumber)
 
 //cần xác thực 
 router.get('/readings', NovelController.GetReadings);
+router.post('/novel/create-with-chapters', verifyToken, NovelController.CreateNovelWithChapters);
 
 
 export default router;

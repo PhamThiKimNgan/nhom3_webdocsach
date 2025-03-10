@@ -90,14 +90,20 @@ export const AuthController = {
             if(user.isDeleted){
                 return res.status(404).json(ResponseDetail(400, { username: "Sai tên đăng nhập/mật khẩu" }))
             }
+            // mã hóa mật khẩu và so sánh nó với mật khẩu được mã hóa dưới db
             const auth = await bcrypt.compare(req.body.password, user.password)
+
             if (auth) {
+                // tạo dữ liệu cho token
                 const data = {
                     sub: user.username,
                     roles: user.roles.map(item => item.name)
                 };
+                // tạo access token 
                 const accessToken = AuthController.generateAccessToken(data);
+                // tạo refresh token
                 const refreshToken = AuthController.generateRefreshToken(data);
+                // lấy thông tin người dùng 
                 const { username, nickname, image, roles,balance,_id,birthdate,email } = user._doc;
 
                 res.cookie("token", refreshToken, {
@@ -105,7 +111,9 @@ export const AuthController = {
                     secure: false,
                     sameSite: "strict"
                 })
-                return res.status(200).json(ResponseData(200, {
+                // trả 1 response gồm các thông tin người dùng và accesstoken ( jwt để thực hiện việc xác thực phân quyền )
+                // và refresh token để làm mới sau khi accesstoken hết hạn mà không phải đăng nhập lại
+                 return res.status(200).json(ResponseData(200, {
                     username,
                     nickname,
                     birthdate,

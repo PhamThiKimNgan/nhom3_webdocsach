@@ -170,6 +170,7 @@ export const NovelController = {
         .json(ResponseDetail(500, { message: "Lỗi lấy thông tin chap" }));
     }
   },
+
   GetChapterByNumber: async (req, res) => {
     try {
       const url = req.params.url;
@@ -192,22 +193,34 @@ export const NovelController = {
         .json(ResponseDetail(500, { message: "Lỗi lấy thông tin chap" }));
     }
   },
+
   SearchNovelByName: async (req, res) => {
     try {
-        let search = req.query.search
-        if (!search) {
-            return res.status(500).json(ResponseDetail(500, { message: "Thiếu field" }))
-        }
-        search = search.normalize("NFD").toLowerCase().replace(/[\u0300-\u036f]/g, "").replace(/[\u0300-\u036f]/g, "").split(' ').filter(i => i !== '').join(' ')
-        const novels = await Novel.find({ $text: { $search: search } })
-        if (novels) {
-            return res.status(200).json(ResponseData(200, novels))
-        }
+      let search = req.query.search;
+      if (!search) {
+        return res
+          .status(500)
+          .json(ResponseDetail(500, { message: "Thiếu field" }));
+      }
+      search = search
+        .normalize("NFD")
+        .toLowerCase()
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[\u0300-\u036f]/g, "")
+        .split(" ")
+        .filter((i) => i !== "")
+        .join(" ");
+      const novels = await Novel.find({ $text: { $search: search } });
+      if (novels) {
+        return res.status(200).json(ResponseData(200, novels));
+      }
     } catch (error) {
-        console.log(error)
-        return res.status(500).json(ResponseDetail(500, { message: "Lỗi tìm truyện" }))
+      console.log(error);
+      return res
+        .status(500)
+        .json(ResponseDetail(500, { message: "Lỗi tìm truyện" }));
     }
-},
+  },
   // SearchNovelByName: async (req, res) => {
   //   try {
   //     const search = req.query.search;
@@ -240,6 +253,72 @@ export const NovelController = {
     } catch (error) {
       console.log(error);
       res.status(500).json(ResponseDetail(500, { message: "Lỗi GetNovels" }));
+    }
+  },
+
+
+  CreateNovelWithChapters: async (req, res) => {
+    try {
+      const { story, chapters } = req.body;
+
+      if (!story || !chapters || !Array.isArray(chapters)) {
+        return res
+          .status(400)
+          .json(ResponseDetail(400, { message: "Dữ liệu không hợp lệ" }));
+      }
+
+      const { name, author, description, image, url } = story;
+      const uploader = new mongoose.Types.ObjectId(
+        req.body.nguoidangtruyen || req.user.id
+      );
+
+      // Create novel
+      const novel = new Novel({
+        name,
+        url,
+        image,
+        author,
+        uploader,
+        description,
+        numberofchapter: chapters.length,
+      });
+
+      // Validate novel
+      let error = novel.validateSync();
+      if (error) {
+        return res.status(400).json(
+          ResponseDetail(400, {
+            message: Object.values(error.errors)[0].message || "Lỗi",
+          })
+        );
+      }
+
+      // Save novel
+      const savedNovel = await novel.save();
+
+      // Create and save chapters
+      if (chapters.length > 0) {
+        const chapterDocuments = chapters.map((chapter) => ({
+          chaptername: chapter.name || `Chương ${chapter.chapternumber}`,
+          novelId: savedNovel._id,
+          content: chapter.content,
+          chapternumber: chapter.chapternumber,
+        }));
+        // nhận nhiều document 1 lúc
+        await Chapter.insertMany(chapterDocuments);
+      }
+
+      return res.status(200).json(
+        ResponseData(200, {
+          novel: savedNovel,
+          chaptersCount: chapters.length,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(500)
+        .json(ResponseDetail(500, { message: "Lỗi đăng truyện" }));
     }
   },
 };
